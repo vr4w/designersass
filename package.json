@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "start": "electron .",
-    "dist:win": "powershell -ExecutionPolicy Bypass -File packaging/build-pdf-exporter.ps1 && electron-builder --win nsis portable"
+    "dist:win": "powershell -ExecutionPolicy Bypass -File packaging/build-pdf-exporter.ps1 && electron-builder --win nsis portable",
+    "release:win": "powershell -ExecutionPolicy Bypass -File packaging/build-pdf-exporter.ps1 && electron-builder --win nsis --publish always"
   },
   "devDependencies": {
     "electron": "^38.0.0",
@@ -15,6 +16,11 @@
   "build": {
     "appId": "de.designersass.app",
     "productName": "DesignerSass",
+    "publish": {
+      "provider": "github",
+      "owner": "vr4w",
+      "repo": "designersass"
+    },
     "files": [
       "index.html",
       "styles.css",
@@ -28,11 +34,20 @@
       "package.json"
     ],
     "extraResources": [
-      { "from": "assets", "to": "assets" },
-      { "from": "dist-pdf/export_print_pdf.exe", "to": "export_print_pdf.exe" }
+      {
+        "from": "assets",
+        "to": "assets"
+      },
+      {
+        "from": "dist-pdf/export_print_pdf.exe",
+        "to": "export_print_pdf.exe"
+      }
     ],
     "win": {
-      "target": ["nsis", "portable"]
+      "target": [
+        "nsis",
+        "portable"
+      ]
     },
     "nsis": {
       "artifactName": "DesignerSass-${version}-${arch}-setup.${ext}",
@@ -44,5 +59,8 @@
     "portable": {
       "artifactName": "DesignerSass-${version}-${arch}-portable.${ext}"
     }
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9"
   }
 }

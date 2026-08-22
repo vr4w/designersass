@@ -1,4 +1,5 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const { spawn } = require('child_process');
 const fs = require('fs');
 const os = require('os');
@@ -14,6 +15,26 @@ function createWindow() {
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false },
   });
   window.loadFile(path.join(__dirname, '..', 'index.html'));
+  return window;
+}
+
+function setupAutoUpdates(window) {
+  if (!app.isPackaged) return;
+  autoUpdater.autoDownload = true;
+  autoUpdater.autoInstallOnAppQuit = true;
+  autoUpdater.on('update-downloaded', async () => {
+    const choice = await dialog.showMessageBox(window, {
+      type: 'info',
+      buttons: ['Jetzt neu starten', 'Später'],
+      defaultId: 0,
+      cancelId: 1,
+      title: 'DesignerSass-Update bereit',
+      message: 'Ein Update wurde heruntergeladen.',
+      detail: 'DesignerSass kann jetzt neu gestartet werden, um das Update zu installieren.',
+    });
+    if (choice.response === 0) autoUpdater.quitAndInstall();
+  });
+  setTimeout(() => autoUpdater.checkForUpdates().catch(() => {}), 10000);
 }
 
 function pythonCommand() {
@@ -70,7 +91,8 @@ ipcMain.handle('send-discord', async (_event, { webhookUrl, payload }) => {
 });
 
 app.whenReady().then(() => {
-  createWindow();
+  const window = createWindow();
+  setupAutoUpdates(window);
   app.on('activate', () => { if (BrowserWindow.getAllWindows().length === 0) createWindow(); });
 });
 app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });

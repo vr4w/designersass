@@ -17,6 +17,7 @@
 - Electron-Desktop-Wrapper mit lokalem Exportkanal vorbereitet
 - Windows-Buildskript für gebündelten PDF-Exporter und NSIS-/Portable-Ausgabe vorbereitet
 - Discord-Kontaktfenster als lokaler MVP vorbereitet; Webhook-Konfiguration bleibt außerhalb des Repositories
+- GitHub-Release-Workflow und automatische Update-Prüfung für Windows vorbereitet
 
 ## Direkter Arbeitsablauf
 
@@ -24,9 +25,9 @@ DesignerSass ist bewusst kein Projektverwaltungsprogramm. Der Ablauf ist: Vorlag
 
 ## Nächste Editor-Bausteine
 
-1. Neue Discord-Webhook-Konfiguration lokal einrichten und Nachricht aus Electron testen.
-2. Druckexport mit ausgeblendeten TEMPLATE-/INFO-Elementen und SCHNITT-Ausgabe.
-3. Windows-Build auf Mattis Laptop ausführen und Installer/Portable-Version testen.
+1. Ersten Windows-Release mit Tag `v0.1.0` über GitHub Actions bauen.
+2. Installer auf Mattis Laptop testen; danach Update mit `v0.1.1` prüfen.
+3. Druckexport mit ausgeblendeten TEMPLATE-/INFO-Elementen und SCHNITT-Ausgabe.
 4. Retusche-/Entfernen-Werkzeug als eigener Bildbearbeitungsmodus.
 5. Verbesserte Bildausrichtung und kontrolliertes Einrasten an den Schnittflächen.
 
