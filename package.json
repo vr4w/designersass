@@ -1,0 +1,46 @@
+{
+  "name": "designersass",
+  "version": "0.1.0",
+  "description": "Offline CD cover studio",
+  "main": "electron/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "powershell -ExecutionPolicy Bypass -File packaging/build-pdf-exporter.ps1 && electron-builder --win nsis portable"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "de.designersass.app",
+    "productName": "DesignerSass",
+    "files": [
+      "index.html",
+      "styles.css",
+      "overrides.css",
+      "print.css",
+      "print-landscape.css",
+      "app.js",
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      { "from": "assets", "to": "assets" },
+      { "from": "dist-pdf/export_print_pdf.exe", "to": "export_print_pdf.exe" }
+    ],
+    "win": {
+      "target": ["nsis", "portable"]
+    },
+    "nsis": {
+      "artifactName": "DesignerSass-${version}-${arch}-setup.${ext}",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "DesignerSass"
+    },
+    "portable": {
+      "artifactName": "DesignerSass-${version}-${arch}-portable.${ext}"
+    }
+  }
+}

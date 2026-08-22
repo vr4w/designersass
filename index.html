@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DesignerSass</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="overrides.css" />
+    <link rel="stylesheet" href="print.css" />
+    <link rel="stylesheet" href="print-landscape.css" id="printLandscape" media="print" disabled />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">D</span><div><strong>DesignerSass</strong><small>CD cover studio</small></div></div>
+
+        <section class="panel-section">
+          <div class="section-label">Vorlage</div>
+          <div class="template-list" id="templateList">
+            <button class="template-card active" data-template="front"><span class="template-icon jewel"></span><span><b>Jewel Case</b><small>Front</small></span></button>
+            <button class="template-card" data-template="back"><span class="template-icon jewel back-icon"></span><span><b>Jewel Case</b><small>Back / Inlay</small></span></button>
+            <button class="template-card" data-template="cd"><span class="template-icon disc"></span><span><b>Runde CD</b><small>Direktaufkleber</small></span></button>
+          </div>
+        </section>
+
+        <section class="panel-section import-section">
+          <div class="section-label">Import</div>
+          <label class="dropzone" id="dropzone" for="fileInput">
+            <span class="drop-icon">＋</span><b>Bilder ablegen</b><small>oder Dateien auswählen</small>
+          </label>
+          <input id="fileInput" type="file" accept="image/*" multiple hidden />
+        </section>
+
+        <section class="panel-section tools-section">
+          <div class="section-label">Werkzeuge</div>
+          <div class="tool-row"><button class="tool-button selected" id="selectTool">↖<span>Auswahl</span></button><button class="tool-button">⌁<span>Bild</span></button></div>
+        </section>
+
+        <div class="sidebar-footer"><span class="status-dot"></span> Lokales Projekt <span class="footer-spacer"></span><span>v0.1</span></div>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar"><div><span class="eyebrow">DIREKTER DRUCK</span><h1>DesignerSass · aktuelle Vorlage</h1></div><div class="top-actions"><button class="export-button" id="exportButton">Druck-PDF vorbereiten <span>↗</span></button></div></header>
+        <div class="canvas-toolbar"><div class="breadcrumb">Jewel Case <span>/</span> Front</div><div class="zoom-control"><button id="zoomOut">−</button><span id="zoomLabel">100%</span><button id="zoomIn">＋</button></div><button class="fit-button" id="fitButton">Einpassen</button><button class="product-toggle" id="productToggle">Endprodukt</button></div>
+        <div class="canvas-area" id="canvasArea">
+          <div class="ruler ruler-top"><span>0</span><span>50</span><span>100</span><span>150</span><span>200</span><span>mm</span></div>
+          <div class="ruler ruler-left"><span>0</span><span>50</span><span>100</span><span>150</span><span>mm</span></div>
+          <div class="artboard-wrap" id="artboardWrap"><div class="artboard front-template" id="artboard"><div class="empty-art"><span class="empty-plus">＋</span><b>Dein Cover beginnt hier</b><small>Ziehe ein Bild auf die Arbeitsfläche</small></div><div class="template-guides" id="templateGuides"></div><div class="resize-handles" id="resizeHandles" hidden><i data-handle="nw"></i><i data-handle="ne"></i><i data-handle="sw"></i><i data-handle="se"></i></div></div></div>
+          <div class="canvas-hint">Hilfslinien werden beim Export ausgeblendet</div>
+        </div>
+      </section>
+
+      <aside class="inspector"><div class="inspector-heading"><div><span class="eyebrow">DOKUMENT</span><h2>Eigenschaften</h2></div><button class="more-button">•••</button></div><div class="inspector-card"><div class="property-title">Aktive Vorlage</div><div class="active-template"><span class="template-icon jewel"></span><div><b id="activeTemplateName">Jewel Case Front</b><small id="activeTemplateSize">120 × 120 mm</small></div></div></div><div class="inspector-card layers-card"><div class="property-title">Ebenen <span id="layerCount">0</span></div><div class="layers-empty" id="layersEmpty">Noch keine Elemente<br /><small>Importiere ein Bild auf die Arbeitsfläche.</small></div><div class="layer-item" id="layerItem" hidden><span class="layer-thumb">▧</span><span id="layerName">Bild</span><span class="layer-selected">●</span></div></div><div class="inspector-card element-properties" id="elementProperties" hidden><div class="property-title">Auswahl</div><div class="fit-row"><button id="fitContain">Einpassen</button><button id="fitCover">Fläche füllen</button></div><label>Größe <output id="scaleOutput">100%</output><input id="scaleControl" type="range" min="10" max="1000" value="100" /></label><label>Drehung <output id="rotationOutput">0°</output><input id="rotationControl" type="range" min="-180" max="180" value="0" /></label><div class="flip-row"><button id="flipHorizontal">↔ Spiegeln</button><button id="flipVertical">↕ Spiegeln</button></div><div class="extend-section"><div class="property-title">Kante erweitern</div><div class="extend-row"><button data-extend="left">←</button><button data-extend="right" class="active">→</button><button data-extend="top">↑</button><button data-extend="bottom">↓</button></div><label>Bereich <output id="extendOutput">10%</output><input id="extendControl" type="range" min="2" max="50" value="10" /></label><button class="extend-apply" id="extendApply">Erweiterung anwenden</button></div><button class="delete-button" id="deleteButton">⌫ Bild entfernen</button></div><div class="inspector-tip"><span>✦</span><div><b>Guter Anfang</b><p>Wähle eine Vorlage und ziehe dein erstes Bild auf die Arbeitsfläche.</p></div></div></aside>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

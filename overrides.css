@@ -1,0 +1,20 @@
+/* Final template geometry overrides. Kept separate so older visual rules cannot win. */
+.artboard.front-template{width:720px;height:509px}
+.artboard.back-template{width:420px;height:594px}
+.artboard.cd-template{width:420px;height:591px;background:#fff}
+.template-guides .circle-zone{height:auto!important;aspect-ratio:1/1}
+.artboard.cd-template .empty-art{inset:0}
+.artboard.cd-template .placed-image{width:270px;height:270px;left:75px;top:80px}
+.template-guides{z-index:6}
+.print-cut-lines{display:none;position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:8;pointer-events:none}.print-cut-lines circle,.print-cut-lines path{fill:none;stroke:#222;stroke-width:.28;vector-effect:non-scaling-stroke}
+.product-mask{position:absolute;inset:0;width:100%;height:100%;display:none;z-index:5;pointer-events:none}
+.template-guides.product-preview .product-mask{display:block}
+.product-toggle{border:1px solid var(--line);border-radius:6px;padding:6px 10px;background:#1b2128;color:#9ea9b3;font-size:10px;cursor:pointer}
+.product-toggle.active{background:var(--accent);color:#182014;border-color:var(--accent)}
+.resize-handles{position:absolute;inset:0;z-index:7;pointer-events:none}
+.resize-handles i{position:absolute;width:10px;height:10px;border:2px solid var(--accent);background:#172016;border-radius:2px;pointer-events:auto}
+.resize-handles i[data-handle="nw"],.resize-handles i[data-handle="se"]{cursor:nwse-resize}
+.resize-handles i[data-handle="ne"],.resize-handles i[data-handle="sw"]{cursor:nesw-resize}
+.artboard.pan-active{cursor:grabbing}.canvas-area.pan-ready{cursor:grab}
+.canvas-area.resizing,.canvas-area.resizing *{cursor:nwse-resize!important}
+.extend-section{border-top:1px solid var(--line);margin-top:18px;padding-top:16px}.extend-row{display:flex;gap:5px;margin-top:11px}.extend-row button{flex:1;padding:7px 0;border:1px solid var(--line);border-radius:5px;background:#1b2128;color:#abb4bf;cursor:pointer}.extend-row button.active,.extend-row button:hover{border-color:#71834e;background:#24301e;color:var(--accent)}.extend-apply{width:100%;margin-top:11px;padding:8px;border:1px solid #71834e;border-radius:6px;background:#202a1d;color:#d9ff66;font-size:10px;cursor:pointer}.extend-apply:hover{background:#2d3b25}
