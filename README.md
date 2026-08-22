@@ -54,7 +54,7 @@ Ein Release wird durch einen Tag wie `v0.1.1` ausgelöst. Der Windows-Build läu
 
 ## Discord-Kontakt einrichten
 
-Für den privaten Testbetrieb kann das Kontaktfenster Nachrichten an einen Discord-Kanal senden. Kopiere `discord-config.example.js` zu `discord-config.js` und trage dort den Webhook ein. Die lokale Konfigurationsdatei wird nicht versioniert. Eine veröffentlichte oder versehentlich geteilte Webhook-Adresse muss sofort in Discord gelöscht und neu erstellt werden.
+Im installierten DesignerSass kann die Discord-Adresse direkt über `Kontakt` → `Discord einrichten` eingetragen werden. Sie wird nur im lokalen Windows-Benutzerprofil gespeichert und bei Updates nicht überschrieben. Eine veröffentlichte oder versehentlich geteilte Webhook-Adresse muss sofort in Discord gelöscht und neu erstellt werden.
 
 ## Roadmap
 

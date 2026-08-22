@@ -16,6 +16,13 @@ const templateImages = { front: [], back: [], cd: [] };
 let panX = 0;
 let panY = 0;
 let productPreview = false;
+let discordWebhookUrl = window.DESIGNERSASS_DISCORD?.webhookUrl?.trim() || '';
+
+if (window.designerSassNative?.getDiscordConfig) {
+  window.designerSassNative.getDiscordConfig().then((config) => {
+    if (config?.webhookUrl) discordWebhookUrl = config.webhookUrl.trim();
+  }).catch(() => {});
+}
 
 document.querySelectorAll('.template-card').forEach((button) => {
   button.addEventListener('click', () => {
@@ -128,6 +135,9 @@ const contactCategory = document.querySelector('#contactCategory');
 const contactMessage = document.querySelector('#contactMessage');
 const contactStatus = document.querySelector('#contactStatus');
 const contactSend = document.querySelector('#contactSend');
+const contactConfigure = document.querySelector('#contactConfigure');
+const discordSetup = document.querySelector('#discordSetup');
+const discordWebhookInput = document.querySelector('#discordWebhookInput');
 
 function setContactStatus(message, error = false) {
   contactStatus.textContent = message;
@@ -141,9 +151,34 @@ function closeContact() {
 
 document.querySelector('#contactButton').addEventListener('click', () => {
   contactModal.hidden = false;
+  discordSetup.hidden = Boolean(discordWebhookUrl);
   contactMessage.focus();
 });
 document.querySelector('#contactCancel').addEventListener('click', closeContact);
+contactConfigure.addEventListener('click', () => {
+  discordSetup.hidden = false;
+  discordWebhookInput.value = discordWebhookUrl;
+  discordWebhookInput.focus();
+});
+document.querySelector('#discordSetupCancel').addEventListener('click', () => { discordSetup.hidden = true; });
+document.querySelector('#discordSetupSave').addEventListener('click', async () => {
+  const value = discordWebhookInput.value.trim();
+  if (!value.startsWith('https://discord.com/api/webhooks/') && !value.startsWith('https://discordapp.com/api/webhooks/')) {
+    return setContactStatus('Bitte eine gültige Discord-Webhook-Adresse eintragen.', true);
+  }
+  try {
+    if (window.designerSassNative?.saveDiscordConfig) {
+      await window.designerSassNative.saveDiscordConfig({ webhookUrl: value });
+    } else {
+      localStorage.setItem('designersass-discord-webhook', value);
+    }
+    discordWebhookUrl = value;
+    discordSetup.hidden = true;
+    setContactStatus('Discord wurde lokal eingerichtet.');
+  } catch (error) {
+    setContactStatus(`Speichern fehlgeschlagen: ${error.message}`, true);
+  }
+});
 contactModal.addEventListener('click', (event) => {
   if (event.target === contactModal) closeContact();
 });
@@ -166,7 +201,7 @@ async function sendDiscordMessage(webhookUrl, payload) {
 
 contactSend.addEventListener('click', async () => {
   const message = contactMessage.value.trim();
-  const webhookUrl = window.DESIGNERSASS_DISCORD?.webhookUrl?.trim();
+  const webhookUrl = discordWebhookUrl;
   if (!message) return setContactStatus('Bitte zuerst eine Nachricht eingeben.', true);
   if (!webhookUrl) return setContactStatus('Discord ist noch nicht eingerichtet. Bitte discord-config.js anlegen.', true);
   const payload = {

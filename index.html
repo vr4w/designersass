@@ -57,6 +57,8 @@
         <div class="contact-dialog" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
           <span class="eyebrow">DIREKTER KONTAKT</span><h2 id="contactTitle">Nachricht an DesignerSass</h2>
           <p>Schick eine kurze Rückmeldung oder einen Fehlerbericht direkt in den DesignerSass-Discord-Kanal.</p>
+          <button class="contact-configure" id="contactConfigure">Discord einrichten</button>
+          <div class="discord-setup" id="discordSetup" hidden><label>Discord-Webhook-Adresse<input id="discordWebhookInput" type="password" autocomplete="off" placeholder="https://discord.com/api/webhooks/..." /></label><small>Die Adresse wird nur lokal auf diesem Rechner gespeichert.</small><div class="contact-actions"><button id="discordSetupCancel">Abbrechen</button><button class="primary" id="discordSetupSave">Lokal speichern</button></div></div>
           <label>Kategorie<select id="contactCategory"><option>Feedback</option><option>Fehler melden</option><option>Funktionswunsch</option></select></label>
           <label>Nachricht<textarea id="contactMessage" placeholder="Was möchtest du uns mitteilen?"></textarea></label>
           <div class="contact-status" id="contactStatus" aria-live="polite"></div>

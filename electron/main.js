@@ -5,6 +5,10 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
+function discordConfigPath() {
+  return path.join(app.getPath('userData'), 'discord-config.json');
+}
+
 function createWindow() {
   const window = new BrowserWindow({
     width: 1440,
@@ -87,6 +91,26 @@ ipcMain.handle('send-discord', async (_event, { webhookUrl, payload }) => {
     body: JSON.stringify(payload),
   });
   if (!response.ok) throw new Error(`Discord antwortet mit ${response.status}`);
+  return { ok: true };
+});
+
+ipcMain.handle('get-discord-config', () => {
+  try {
+    return JSON.parse(fs.readFileSync(discordConfigPath(), 'utf8'));
+  } catch {
+    return { webhookUrl: '' };
+  }
+});
+
+ipcMain.handle('save-discord-config', async (_event, { webhookUrl }) => {
+  const value = String(webhookUrl || '').trim();
+  let parsed;
+  try { parsed = new URL(value); } catch { throw new Error('Keine gültige Webhook-Adresse.'); }
+  if (parsed.protocol !== 'https:' || !['discord.com', 'discordapp.com'].includes(parsed.hostname) || !parsed.pathname.startsWith('/api/webhooks/')) {
+    throw new Error('Das ist keine gültige Discord-Webhook-Adresse.');
+  }
+  fs.mkdirSync(app.getPath('userData'), { recursive: true });
+  fs.writeFileSync(discordConfigPath(), JSON.stringify({ webhookUrl: value }, null, 2), { encoding: 'utf8', mode: 0o600 });
   return { ok: true };
 });
 

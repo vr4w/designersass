@@ -1,6 +1,6 @@
 {
   "name": "designersass",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Offline CD cover studio",
   "main": "electron/main.js",
   "private": true,
