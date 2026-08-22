@@ -58,6 +58,17 @@ ipcMain.handle('export-pdf', async (_event, payload) => {
   });
 });
 
+ipcMain.handle('send-discord', async (_event, { webhookUrl, payload }) => {
+  if (!webhookUrl || !payload) throw new Error('Discord ist nicht eingerichtet.');
+  const response = await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) throw new Error(`Discord antwortet mit ${response.status}`);
+  return { ok: true };
+});
+
 app.whenReady().then(() => {
   createWindow();
   app.on('activate', () => { if (BrowserWindow.getAllWindows().length === 0) createWindow(); });

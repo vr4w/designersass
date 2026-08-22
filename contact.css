@@ -1,0 +1,15 @@
+.contact-modal[hidden] { display: none; }
+.contact-modal { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding: 24px; background: #080b0dcc; }
+.contact-dialog { width: min(520px, 100%); padding: 26px; border: 1px solid #38434c; border-radius: 18px; background: #1b2229; box-shadow: 0 24px 80px #0009; }
+.contact-dialog h2 { margin: 5px 0 8px; }
+.contact-dialog p { color: #a9b4bc; line-height: 1.5; }
+.contact-dialog label { display: grid; gap: 8px; margin-top: 18px; color: #d8e0e5; font-size: 13px; }
+.contact-dialog select, .contact-dialog textarea { width: 100%; box-sizing: border-box; border: 1px solid #43505a; border-radius: 9px; background: #13191f; color: #eef3f6; padding: 11px; font: inherit; }
+.contact-dialog textarea { min-height: 130px; resize: vertical; }
+.contact-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+.contact-actions button { border: 1px solid #43505a; border-radius: 9px; background: #242d35; color: #eef3f6; padding: 11px 16px; cursor: pointer; }
+.contact-actions .primary { border-color: #d9ff66; background: #d9ff66; color: #172016; font-weight: 700; }
+.contact-status { min-height: 20px; margin: 14px 0 0; color: #d9ff66; font-size: 13px; }
+.contact-status.error { color: #ff9f9f; }
+.contact-button { border: 1px solid #3e4b55; border-radius: 9px; background: transparent; color: #c9d2d8; padding: 10px 14px; cursor: pointer; }
+.contact-button:hover { border-color: #d9ff66; color: #d9ff66; }

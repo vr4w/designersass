@@ -16,6 +16,7 @@
 - Erster nativer PDF-Exportkern in `export_print_pdf.py`
 - Electron-Desktop-Wrapper mit lokalem Exportkanal vorbereitet
 - Windows-Buildskript für gebündelten PDF-Exporter und NSIS-/Portable-Ausgabe vorbereitet
+- Discord-Kontaktfenster als lokaler MVP vorbereitet; Webhook-Konfiguration bleibt außerhalb des Repositories
 
 ## Direkter Arbeitsablauf
 
@@ -23,10 +24,11 @@ DesignerSass ist bewusst kein Projektverwaltungsprogramm. Der Ablauf ist: Vorlag
 
 ## Nächste Editor-Bausteine
 
-1. Druckexport mit ausgeblendeten TEMPLATE-/INFO-Elementen und SCHNITT-Ausgabe.
-2. Windows-Build auf Mattis Laptop ausführen und Installer/Portable-Version testen.
-3. Retusche-/Entfernen-Werkzeug als eigener Bildbearbeitungsmodus.
-4. Verbesserte Bildausrichtung und kontrolliertes Einrasten an den Schnittflächen.
+1. Neue Discord-Webhook-Konfiguration lokal einrichten und Nachricht aus Electron testen.
+2. Druckexport mit ausgeblendeten TEMPLATE-/INFO-Elementen und SCHNITT-Ausgabe.
+3. Windows-Build auf Mattis Laptop ausführen und Installer/Portable-Version testen.
+4. Retusche-/Entfernen-Werkzeug als eigener Bildbearbeitungsmodus.
+5. Verbesserte Bildausrichtung und kontrolliertes Einrasten an den Schnittflächen.
 
 ## Raspberry-Pi-Druckserver
 

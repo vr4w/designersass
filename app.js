@@ -122,6 +122,78 @@ document.querySelector('#exportButton').addEventListener('click', async () => {
   }
   window.print();
 });
+
+const contactModal = document.querySelector('#contactModal');
+const contactCategory = document.querySelector('#contactCategory');
+const contactMessage = document.querySelector('#contactMessage');
+const contactStatus = document.querySelector('#contactStatus');
+const contactSend = document.querySelector('#contactSend');
+
+function setContactStatus(message, error = false) {
+  contactStatus.textContent = message;
+  contactStatus.classList.toggle('error', error);
+}
+
+function closeContact() {
+  contactModal.hidden = true;
+  setContactStatus('');
+}
+
+document.querySelector('#contactButton').addEventListener('click', () => {
+  contactModal.hidden = false;
+  contactMessage.focus();
+});
+document.querySelector('#contactCancel').addEventListener('click', closeContact);
+contactModal.addEventListener('click', (event) => {
+  if (event.target === contactModal) closeContact();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !contactModal.hidden) closeContact();
+});
+
+async function sendDiscordMessage(webhookUrl, payload) {
+  if (window.designerSassNative?.sendDiscordMessage) {
+    return window.designerSassNative.sendDiscordMessage({ webhookUrl, payload });
+  }
+  const response = await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) throw new Error(`Discord antwortet mit ${response.status}`);
+  return { ok: true };
+}
+
+contactSend.addEventListener('click', async () => {
+  const message = contactMessage.value.trim();
+  const webhookUrl = window.DESIGNERSASS_DISCORD?.webhookUrl?.trim();
+  if (!message) return setContactStatus('Bitte zuerst eine Nachricht eingeben.', true);
+  if (!webhookUrl) return setContactStatus('Discord ist noch nicht eingerichtet. Bitte discord-config.js anlegen.', true);
+  const payload = {
+    username: 'DesignerSass',
+    embeds: [{
+      title: contactCategory.value,
+      description: message,
+      color: 0xd9ff66,
+      fields: [
+        { name: 'Vorlage', value: templates[activeTemplateKey].name, inline: true },
+        { name: 'App', value: 'DesignerSass 0.1', inline: true },
+      ],
+      timestamp: new Date().toISOString(),
+    }],
+  };
+  contactSend.disabled = true;
+  setContactStatus('Nachricht wird gesendet...');
+  try {
+    await sendDiscordMessage(webhookUrl, payload);
+    contactMessage.value = '';
+    setContactStatus('Nachricht wurde an Discord gesendet.');
+  } catch (error) {
+    setContactStatus(`Senden fehlgeschlagen: ${error.message}`, true);
+  } finally {
+    contactSend.disabled = false;
+  }
+});
 const dropzone = document.querySelector('#dropzone');
 const fileInput = document.querySelector('#fileInput');
 ['dragenter', 'dragover'].forEach((eventName) => dropzone.addEventListener(eventName, (event) => {

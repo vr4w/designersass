@@ -1,25 +1,34 @@
-# Kommunikationskanal und Admin-Zentrale
+# Kommunikationskanal: Discord
 
-Die Idee ist sinnvoll, sollte aber getrennt vom eigentlichen Editor aufgebaut werden.
+Die erste Version nutzt bewusst nur Discord. Das Portal bleibt vorerst außen vor.
 
 ## Zielbild
 
-In DesignerSass gibt es später einen Menüpunkt `Kontakt`. Dort kann ein Nutzer eine kurze Nachricht schreiben und freiwillig technische Angaben mitsenden:
+Im DesignerSass gibt es einen Menüpunkt `Kontakt`. Dort kann ein Nutzer eine kurze Nachricht direkt in den DesignerSass-Discord-Kanal senden:
 
-- App-Version
-- Betriebssystem
-- aktive Vorlage
-- optional eine Fehlerbeschreibung
+- Feedback
+- Fehler melden
+- Funktionswunsch
+- aktive Vorlage und App-Version als Zusatzinformation
 
-Die Nachricht wird an einen zentralen DesignerSass-Dienst gesendet. Das bestehende Admin-Portal kann diese Nachrichten als Eingang anzeigen.
+Technisch wird dafür zunächst ein Discord-Incoming-Webhook verwendet. Discord beschreibt Webhooks als HTTP-Endpunkte, über die Nachrichten direkt in einen Kanal gepostet werden können.
 
-## Warum nicht direkt per E-Mail aus der App?
+## Lokale Einrichtung
 
-Eine direkte Mailfunktion wäre zunächst einfacher, aber schlecht kontrollierbar: Spam-Schutz, Absender, Mailserver und Datenschutz würden in jede Client-App wandern. Ein zentraler Eingang ist zuverlässiger.
+1. In Discord einen Webhook für den gewünschten Kanal erstellen.
+2. `discord-config.example.js` als `discord-config.js` kopieren.
+3. Die neue Webhook-Adresse ausschließlich in dieser lokalen Datei eintragen.
+4. DesignerSass neu starten.
+
+`discord-config.js` ist in `.gitignore` eingetragen und darf niemals in GitHub landen. Eine Webhook-Adresse ist wie ein Passwort: Wenn sie versehentlich veröffentlicht wurde, muss sie in Discord gelöscht und neu erstellt werden.
+
+## Warum zunächst direkt zu Discord?
+
+Für den privaten Familienbetrieb ist das der kleinste funktionierende Schritt: kein eigener Server, keine Benutzerkonten und kein Portal nötig. Für eine öffentliche Verteilung sollte später ein kleiner Relay-Dienst dazwischengeschaltet werden, damit der Webhook geheim bleibt und Spam geschützt werden kann.
 
 ## Spätere Admin-Zentrale
 
-Das Admin-Portal könnte langfristig mehrere lokale Apps verbinden:
+Das Admin-Portal bleibt eine spätere Option für:
 
 - DesignerSass-Versionen und Update-Status
 - Download- und Installationszahlen
@@ -27,4 +36,4 @@ Das Admin-Portal könnte langfristig mehrere lokale Apps verbinden:
 - MPRINT Helper: online/offline und letzte Verbindung
 - weitere interne Tools und deren Status
 
-Das sollte zunächst als bewusstes Dashboard mit opt-in Telemetrie gebaut werden. Die Basisversion von DesignerSass bleibt vollständig lokal und sendet nichts automatisch.
+Die Basisversion von DesignerSass bleibt vollständig lokal und sendet nichts automatisch. Discord wird nur verwendet, wenn der Nutzer selbst eine Nachricht abschickt.

@@ -16,6 +16,7 @@ Der Schwerpunkt liegt auf einer verständlichen, professionellen Oberfläche fü
 - Endprodukt-Vorschau
 - nativer PDF-Exportkern mit SCHNITT-Ausgabe
 - Electron-Desktop-Wrapper für den späteren Offline-Betrieb
+- Kontaktfenster für freiwillige Nachrichten an einen Discord-Kanal
 
 ## Lokal im Browser starten
 
@@ -44,6 +45,10 @@ Der PDF-Exporter wird dabei zusammen mit den Vorlagen gebündelt. Auf dem Zielre
 - Vorlagen, Bilder und Druckausgabe bleiben voneinander getrennt
 - Updates werden später über signierte GitHub-Releases verteilt
 - externe Kommunikation und Telemetrie werden nur bewusst und opt-in ergänzt
+
+## Discord-Kontakt einrichten
+
+Für den privaten Testbetrieb kann das Kontaktfenster Nachrichten an einen Discord-Kanal senden. Kopiere `discord-config.example.js` zu `discord-config.js` und trage dort den Webhook ein. Die lokale Konfigurationsdatei wird nicht versioniert. Eine veröffentlichte oder versehentlich geteilte Webhook-Adresse muss sofort in Discord gelöscht und neu erstellt werden.
 
 ## Roadmap
 
