@@ -21,7 +21,9 @@
       "overrides.css",
       "print.css",
       "print-landscape.css",
+      "contact.css",
       "app.js",
+      "discord-config.js",
       "electron/**/*",
       "package.json"
     ],
