@@ -42,7 +42,7 @@ Der PDF-Exporter wird dabei zusammen mit den Vorlagen gebündelt. Auf dem Zielre
 
 Die installierte Windows-Version prüft beim Start — nur wenn sie als Desktop-App installiert wurde — nach einem GitHub-Release. Gibt es ein neues Release, wird es im Hintergrund geladen und DesignerSass fragt vor dem Neustart nach. Ohne Internet läuft die App normal weiter.
 
-Ein Release wird durch einen Tag wie `v0.1.1` ausgelöst. Der Windows-Build läuft dann automatisch über GitHub Actions und legt Installer sowie Update-Dateien am Release ab.
+Ein Release wird durch einen Tag wie `v0.1.2` ausgelöst. Der Windows-Build läuft dann automatisch über GitHub Actions. Der Workflow prüft die erzeugten Dateien, lädt Installer und Update-Metadaten ausdrücklich an den GitHub-Release hoch und verifiziert anschließend deren Vorhandensein.
 
 ## Projektprinzipien
 

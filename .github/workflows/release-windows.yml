@@ -29,3 +29,38 @@ jobs:
         run: npm run release:win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release-Assets prüfen und hochladen
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem -Path dist -Filter '*-setup.exe' -File | Select-Object -First 1
+          $latest = Join-Path (Get-Location) 'dist/latest.yml'
+          if (-not $setup) {
+            Get-ChildItem -Path dist -File | Format-Table Name, Length
+            throw 'Kein Windows-NSIS-Installer wurde im dist-Ordner erzeugt.'
+          }
+          if (-not (Test-Path $latest)) {
+            Get-ChildItem -Path dist -File | Format-Table Name, Length
+            throw 'latest.yml fehlt. Der electron-updater könnte damit keine Windows-Updates erkennen.'
+          }
+          $tag = '${{ github.ref_name }}'
+          $repo = '${{ github.repository }}'
+          gh release view $tag --repo $repo *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag --repo $repo --verify-tag --title "DesignerSass $tag" --generate-notes
+            if ($LASTEXITCODE -ne 0) { throw 'GitHub Release konnte nicht erzeugt werden.' }
+          }
+          $assets = Get-ChildItem -Path dist -File | Where-Object {
+            $_.Name -match '\.exe$' -or $_.Name -eq 'latest.yml' -or $_.Name -match '\.blockmap$'
+          }
+          foreach ($asset in $assets) {
+            gh release upload $tag $asset.FullName --repo $repo --clobber
+            if ($LASTEXITCODE -ne 0) { throw "Asset konnte nicht hochgeladen werden: $($asset.Name)" }
+          }
+          $published = gh release view $tag --repo $repo --json assets | ConvertFrom-Json
+          $assetNames = @($published.assets | ForEach-Object { $_.name })
+          if (-not ($assetNames -contains $setup.Name)) { throw "Installer fehlt im veröffentlichten Release: $($setup.Name)" }
+          if (-not ($assetNames -contains 'latest.yml')) { throw 'latest.yml fehlt im veröffentlichten Release.' }
+          Write-Host 'Veröffentlichte Release-Assets:'
+          $assetNames | ForEach-Object { Write-Host " - $_" }
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
